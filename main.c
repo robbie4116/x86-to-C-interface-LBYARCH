@@ -23,7 +23,8 @@ double get_time() {
 #endif
 }
 
-void print_first_10(const char* label, float* Z, int n) {
+// print first 10 values from each array
+void print_first_10(const char label[] , float Z[], int n) {
     printf("%s:\n", label);
     for (int i = 0; i < 10 && i < n; i++) {
         printf("  Z[%d] = %.2f\n", i, Z[i]);
@@ -31,7 +32,8 @@ void print_first_10(const char* label, float* Z, int n) {
     printf("\n");
 }
 
-int verify(float* Z_c, float* Z_asm, int n) {
+// compare each value, if there is a difference greater than 1e-5f (0.00001), it is a mismatch
+int verify(float Z_c[] , float Z_asm[] , int n) {
     for (int i = 0; i < n; i++) {
         if (fabsf(Z_c[i] - Z_asm[i]) > 1e-5f) {
             printf("ERROR at index %d: C=%.2f, ASM=%.2f\n", i, Z_c[i], Z_asm[i]);
@@ -65,7 +67,8 @@ int main() {
             continue;
         }
         
-        float A = 2.0f;
+        float A = ((float)rand() + 1.0f) / ((float)RAND_MAX + 1.0f) * 10.0f;  // random float in (0, 10]
+
         for (int i = 0; i < n; i++) {
             X[i] = (float)rand() / RAND_MAX * 10.0f;
             Y[i] = (float)rand() / RAND_MAX * 10.0f;

@@ -6,7 +6,7 @@
 #include <time.h>
 #include <math.h>
 
-void saxpy_c(int n, float A, float* X, float* Y, float* Z);
-void saxpy_asm(int n, float A, float* X, float* Y, float* Z);
+void saxpy_c(int n, float A, float X[], float Y[], float Z[]);
+void saxpy_asm(int n, float A, float X[], float Y[], float Z[]);
 
 #endif
