@@ -69,9 +69,10 @@ int main() {
         
         float A = ((float)rand() + 1.0f) / ((float)RAND_MAX + 1.0f) * 10.0f;  // random float in (0, 10]
 
+        // random float in [0, 100]
         for (int i = 0; i < n; i++) {
-            X[i] = (float)rand() / RAND_MAX * 10.0f;
-            Y[i] = (float)rand() / RAND_MAX * 10.0f;
+            X[i] = (float)rand() / RAND_MAX * 100.0f;
+            Y[i] = (float)rand() / RAND_MAX * 100.0f;
         }
         
         printf("A = %.2f\n\n", A);
