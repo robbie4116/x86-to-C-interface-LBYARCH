@@ -1,7 +1,7 @@
 #include "main.h"
 #include <xmmintrin.h>
 
-void saxpy_c(int n, float A, float* X, float* Y, float* Z) {
+void saxpy_c(int n, float A, float X[], float Y[], float Z[]) {
     for (int i = 0; i < n; i++) {
         __m128 a = _mm_load_ss(&A);
         __m128 x = _mm_load_ss(&X[i]);
