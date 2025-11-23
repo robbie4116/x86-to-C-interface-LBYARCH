@@ -30,7 +30,7 @@ void print_first_10(const char label[], float Z[], int n)
     printf("%s:\n", label);
     for (int i = 0; i < 10 && i < n; i++)
     {
-        printf("  Z[%d] = %.2f\n", i, Z[i]);
+        printf("  Z[%d] = %.6f\n", i, Z[i]);
     }
     printf("\n");
 }
@@ -42,7 +42,7 @@ int verify(float Z_c[], float Z_asm[], int n)
     {
         if (fabsf(Z_c[i] - Z_asm[i]) > 1e-5f)
         {
-            printf("ERROR at index %d: C=%.2f, ASM=%.2f\n", i, Z_c[i], Z_asm[i]);
+            printf("ERROR at index %d: C=%.6f, ASM=%.6f\n", i, Z_c[i], Z_asm[i]);
             return 0;
         }
     }
@@ -55,7 +55,7 @@ void print_first_values(const char title[], const char name[], float arr[], int 
     printf("%s:\n", title);
     for (int i = 0; i < 10 && i < n; i++)
     {
-        printf("  %s[%d] = %.2f\n", name, i, arr[i]);
+        printf("%s[%d] = %.2f\n", name, i, arr[i]);
     }
     printf("\n");
 }
@@ -73,7 +73,7 @@ int main()
     {
         int n = sizes[s];
         printf("------------------------------------------------------\n");
-        printf("|                    Test Case %d                    |\n", s + 1);
+        printf("|                    Test Case %d                     |\n", s + 1);
         printf("------------------------------------------------------\n\n");
 
         float *X = aligned_alloc_compat(16, n * sizeof(float));
@@ -105,20 +105,6 @@ int main()
         saxpy_c(n, A, X, Y, Z_c);
         saxpy_asm(n, A, X, Y, Z_asm);
 
-        double start = get_time();
-        for (int r = 0; r < RUNS; r++)
-        {
-            saxpy_c(n, A, X, Y, Z_c);
-        }
-        double time_c = (get_time() - start) / RUNS;
-
-        start = get_time();
-        for (int r = 0; r < RUNS; r++)
-        {
-            saxpy_asm(n, A, X, Y, Z_asm);
-        }
-        double time_asm = (get_time() - start) / RUNS;
-
         printf("------------ C Computation Results -------------\n");
         for (int i = 0; i < 10 && i < n; i++)
         {
@@ -136,6 +122,22 @@ int main()
         printf("-------------------------------------------------\n");
         printf("Implementation            Time (s)        Speedup\n");
         printf("-------------------------------------------------\n");
+
+        // get average time over all the runs
+        double start = get_time();
+        for (int r = 0; r < RUNS; r++)
+        {
+            saxpy_c(n, A, X, Y, Z_c);
+        }
+        double time_c = (get_time() - start) / RUNS;
+
+        start = get_time();
+        for (int r = 0; r < RUNS; r++)
+        {
+            saxpy_asm(n, A, X, Y, Z_asm);
+        }
+        double time_asm = (get_time() - start) / RUNS;
+
         printf("C Version                 %.6f            -\n", time_c);
         printf("ASM Version               %.6f        %.2fx\n\n", time_asm, time_c / time_asm);
 

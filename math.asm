@@ -1,6 +1,6 @@
 
 %ifdef MACHO
-    %define FUNC _saxpy_asm  ; macOS requires underscore prefix
+    %define FUNC _saxpy_asm  ; macOS needs the underscore prefix
     global _saxpy_asm
 %else
     %define FUNC saxpy_asm   ; Linux/Windows use no prefix
@@ -10,7 +10,7 @@
 section .text
 
 %ifndef WIN64
-; if not Windows, we use the System V AMD64 calling convention for mac
+; if not Windows, we use the AMD64 calling convention for mac
 ;   edi   = n (number of elements)
 ;   xmm0  = A (scalar multiplier, already in XMM register)
 ;   rsi   = X (pointer to input array)
