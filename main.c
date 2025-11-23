@@ -7,13 +7,13 @@ double get_time()
     return ts.tv_sec + ts.tv_nsec * 1e-9;
 }
 
-// print first 10 values from each array
-void print_first_10(const char label[], float Z[], int n)
+// Print first 10 values of an array
+void print_first_10(const char title[], const char name[], float arr[], int n)
 {
-    printf("%s:\n", label);
+    printf("%s:\n", title);
     for (int i = 0; i < 10 && i < n; i++)
     {
-        printf("  Z[%d] = %.6f\n", i, Z[i]);
+        printf("%s[%d] = %.6f\n", name, i, arr[i]);
     }
     printf("\n");
 }
@@ -70,8 +70,8 @@ int main()
         printf("--------------- Input Parameters ---------------\n");
         printf("Size of Array (n) = 2^%d (%d elements)\n", 20 + s * 4, n);
         printf("Scalar Value  A = %.6f\n", A);
-        print_first_values("First 10 Values of X", "X", X, n);
-        print_first_values("First 10 Values of Y", "Y", Y, n);
+        print_first_10("First 10 Values of X", "X", X, n);
+        print_first_10("First 10 Values of Y", "Y", Y, n);
         printf("[?] Values of X and Y Arrays are randomized\n");
 
         saxpy_c(n, A, X, Y, Z_c);
