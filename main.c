@@ -67,12 +67,14 @@ int main()
 
     srand((unsigned)time(NULL));
 
-    printf("--------- SAXPY PERFORMANCE REPORT ---------\n\n");
+    printf("============== SAXPY PERFORMANCE REPORT ==============\n");
 
     for (int s = 0; s < 3; s++)
     {
         int n = sizes[s];
-        printf("------------------ Test Case %d -----------------\n\n", s + 1);
+        printf("------------------------------------------------------\n");
+        printf("|                    Test Case %d                    |\n", s + 1);
+        printf("------------------------------------------------------\n\n");
 
         float *X = aligned_alloc_compat(16, n * sizeof(float));
         float *Y = aligned_alloc_compat(16, n * sizeof(float));
