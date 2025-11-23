@@ -177,11 +177,11 @@ The second reason could be the use of SIMD registers by both C and assembly. In 
 
 ### ii.) C and Assembly Program output with correctness check
 
-![Test Case 1 Output](images/testcase_1.png)
+![Test Case 1 Output](images/Testcase_1.png)
 
-![Test Case 2 Output](images/testcase_2.png)
+![Test Case 2 Output](images/Testcase_2.png)
 
-![Test Case 3 Output](images/testcase_3.png)
+![Test Case 3 Output](images/Testcase_3.png)
 
 ### iii.) Short videos (5-10mins) showing your source code, compilation, and execution of the C and x86-64 program
 
