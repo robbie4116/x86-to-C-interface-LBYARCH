@@ -1,10 +1,23 @@
 #include "main.h"
 
+#ifdef _WIN32
+#include <malloc.h>
+#define aligned_alloc_compat(align, size) _aligned_malloc(size, align)
+#define aligned_free_compat(ptr) _aligned_free(ptr)
+#else
+#define aligned_alloc_compat(align, size) aligned_alloc(align, size)
+#define aligned_free_compat(ptr) free(ptr)
+#endif
+
 double get_time()
 {
+#ifdef _WIN32
+    return (double)clock() / CLOCKS_PER_SEC;
+#else
     struct timespec ts;
     clock_gettime(CLOCK_MONOTONIC, &ts);
     return ts.tv_sec + ts.tv_nsec * 1e-9;
+#endif
 }
 
 // Print first 10 values of an array
@@ -48,10 +61,10 @@ int main()
         printf("|                    Test Case %d                     |\n", s + 1);
         printf("------------------------------------------------------\n\n");
 
-        float *X = aligned_alloc(16, n * sizeof(float));
-        float *Y = aligned_alloc(16, n * sizeof(float));
-        float *Z_c = aligned_alloc(16, n * sizeof(float));
-        float *Z_asm = aligned_alloc(16, n * sizeof(float));
+        float *X = aligned_alloc_compat(16, n * sizeof(float));
+        float *Y = aligned_alloc_compat(16, n * sizeof(float));
+        float *Z_c = aligned_alloc_compat(16, n * sizeof(float));
+        float *Z_asm = aligned_alloc_compat(16, n * sizeof(float));
 
         if (!X || !Y || !Z_c || !Z_asm)
         {
@@ -121,10 +134,10 @@ int main()
             printf("ASM Version               %.6f        %.2fx\n\n", time_asm, time_c / time_asm);
         }
 
-        free(X);
-        free(Y);
-        free(Z_c);
-        free(Z_asm);
+        aligned_free_compat(X);
+        aligned_free_compat(Y);
+        aligned_free_compat(Z_c);
+        aligned_free_compat(Z_asm);
     }
 
     return 0;

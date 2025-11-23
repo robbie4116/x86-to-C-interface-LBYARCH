@@ -13,13 +13,9 @@ Input: Scalar variable n (integer) contains the length of the vector;  Scalar va
 Process:  Z[i] = A × X[i] + Y[i]
 
 Example:
-
 A --> 2.0
-
 x -> 1.0, 2.0, 3.0
-
 y -> 11.0, 12.0, 13.0
-
 (answer) z--> 13.0, 16.0, 19.0
 
 Output: store result in vector Z.  Display the result of 1st ten elements of vector Z for all versions of kernel (i.e., C and x86-64).
@@ -157,6 +153,28 @@ mulss xmm1, xmm0
 addss xmm1, xmm2
 movss [rcx + rax*4], xmm1
 ```
+
+## Build & Run
+- Windows (MinGW-w64 + NASM):
+  1. Ensure `gcc` and `nasm` are available on PATH.
+  2. Run `build.bat` (invokes `nasm -f win64 -dWIN64 math.asm ...` and `gcc`).
+  3. The build produces `saxpy.exe` and runs it. The assembly picks the Windows calling convention when `WIN64` is defined.
+
+- Linux/macOS:
+  - Option A: Native toolchain
+    ```
+    nasm -f elf64 math.asm -o math.o
+    gcc -O2 -msse2 -c math.c -o math_c.o
+    gcc -O2 -c main.c -o main.o
+    gcc main.o math_c.o math.o -lm -o saxpy
+    ./saxpy
+    ```
+  - Option B: Docker helper (useful on Apple Silicon to target x86_64)
+    ```
+    bash test.sh
+    ```
+
+The program prints the first 10 values of X, Y, and Z for both kernels, verifies correctness, and reports average timings over 30 runs for each problem size.
 
 ## Project Deliverables
 
