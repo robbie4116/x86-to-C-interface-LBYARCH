@@ -16,3 +16,4 @@ void saxpy_c(int n, float A, float X[], float Y[], float Z[])
         _mm_store_ss(&Z[i], result);
     }
 }
+
