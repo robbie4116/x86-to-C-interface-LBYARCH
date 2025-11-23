@@ -10,7 +10,7 @@ Write the kernel in (1) C program and (2) an x86-64 assembly language.  The kern
 
 Input: Scalar variable n (integer) contains the length of the vector;  Scalar variable A is a single-precision float. Vectors X, Y and Z are single-precision float.
 
-Process:  
+Process:  Z[i] = A \(\cdot \) X[i] + Y[i]
 
 Example:
 
